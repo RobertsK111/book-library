@@ -26,6 +26,8 @@ def add_book(title, author, price, available, path='library_data.json'):
             json.dump(data, file, indent=4)
          
 
+
+
 def check_book(path='library_data.json'):
     with open(path, 'r', encoding='utf-8') as file:
         data= json.load(file)
@@ -43,6 +45,49 @@ def check_book(path='library_data.json'):
             print("------------------------")
 
 
+
+
+def top_issued(path='library_data.json'): 
+    with open(path, 'r', encoding='utf-8') as file:
+        data= json.load(file) #piekluve 
+
+    if not data:
+        print ("Bibliotēka ir tukša")
+        return
+    
+    sorted_issued = sorted(data.items(), key=lambda x: x[1]['issued'], reverse=True)
+    top5_issued = sorted_issued[:5] # sortošana
+
+    print("Top 5 izsniegtās grāmatas:")
+   
+    for title,info in top5_issued: 
+            print("Nosaukums: " + title)
+            print("Issued: " + str(info['issued']))
+            print("------------------------") # izvade
+
+
+
+
+def top_price(path='library_data.json'):
+    with open(path, 'r', encoding='utf-8') as file:
+        data= json.load(file)
+
+    if not data:
+        print("Bibliotēka ir tukša")
+        return
+    sorted_price= sorted(data.items(), key=lambda x: x[1]['price'], reverse=True)
+    top5_price = sorted_price[:5]
+
+    print("Top 5 dārgākās grāmatas:")
+
+    for title, info in top5_price:
+        print("Nosaukums: " + title)
+        print("Cena: "+  str(info['price']))
+        print("------------------------")
+    
+
+
+    
 
 
 
@@ -67,8 +112,7 @@ def check_book(path='library_data.json'):
 
 
 #TODO: 
-# += available
-# Top 5 izsniegtas 
+ 
 # Top 5 dargakas
 #JSON saglabasana
->>>>>>> 7949cc0 (Book management and listing)
+
