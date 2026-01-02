@@ -8,7 +8,7 @@ def load_data(path=DATA_PATH):
             return json.load(f)
     except FileNotFoundError:
         return {}
-    except JSONDecodeError:
+    except json.JSONDecodeError:
         return {}
 
 def save_data(data, path=DATA_PATH):
@@ -32,7 +32,7 @@ def borrow_book(title, count, path=DATA_PATH):
     if title not in data:
         return (f"Grāmata ar nosaukumu ({title}) nav atrasta")
     
-    if data[title]["avaiable"] < count:
+    if data[title]["available"] < count:
         return (f"Nav pieejamu eksemplāru grāmatai {title}")
     
     data[title]["available"] -= count
