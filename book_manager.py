@@ -1,12 +1,14 @@
 
 import json
-from pathlib import Path
-from typing import Any
+
 
 
 def add_book(title, author, price, available, path='library_data.json'):
-    with open(path, 'r', encoding='utf-8') as file:
-         data = json.load(file)  #piekļuve JSON failam
+    try:
+        with open(path, 'r', encoding='utf-8') as file:         
+         data = json.load(file)  #piekļuve JSON failam un error handling
+    except (FileNotFoundError, json.JSONDecodeError):
+        data = {}     
 
     if title in data:   # ja gramata jau eksiste, tad atjaunina datus
         data[title]['author'] = author
@@ -29,12 +31,14 @@ def add_book(title, author, price, available, path='library_data.json'):
 
 
 def check_book(path='library_data.json'):
-    with open(path, 'r', encoding='utf-8') as file:
-        data= json.load(file)
-    
-    if data == {}: # parbauda vai biblioteka nav tukša 
+    try:
+        with open(path, "r", encoding="utf-8") as file:
+            data = json.load(file)
+    except (FileNotFoundError, json.JSONDecodeError):
+        data = {}
+
+    if not data:  # ja bibloiteka tuksa
         print("Bibliotēka ir tukša")
-        return
     else:
         for title, info in data.items(): # ja nav tukša, izvada visas grāmatas
             print("Nosaukums:" + title)
@@ -48,11 +52,14 @@ def check_book(path='library_data.json'):
 
 
 def top_issued(path='library_data.json'): 
-    with open(path, 'r', encoding='utf-8') as file:
-        data= json.load(file) #piekluve 
+    try:
+        with open(path, "r", encoding="utf-8") as file:
+            data = json.load(file)
+    except (FileNotFoundError, json.JSONDecodeError):
+        data = {}
 
     if not data:
-        print ("Bibliotēka ir tukša")
+        print("Bibliotēka ir tukša")
         return
     
     sorted_issued = sorted(data.items(), key=lambda x: x[1]['issued'], reverse=True)
@@ -69,12 +76,16 @@ def top_issued(path='library_data.json'):
 
 
 def top_price(path='library_data.json'):
-    with open(path, 'r', encoding='utf-8') as file:
-        data= json.load(file)
+    try:
+        with open(path, "r", encoding="utf-8") as file:
+            data = json.load(file)
+    except (FileNotFoundError, json.JSONDecodeError):
+        data = {}
 
     if not data:
         print("Bibliotēka ir tukša")
         return
+
     sorted_price= sorted(data.items(), key=lambda x: x[1]['price'], reverse=True)
     top5_price = sorted_price[:5]
 
@@ -85,34 +96,3 @@ def top_price(path='library_data.json'):
         print("Cena: "+  str(info['price']))
         print("------------------------")
     
-
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#TODO: 
- 
-# Top 5 dargakas
-#JSON saglabasana
-
