@@ -23,8 +23,13 @@ def main():
         if choice == "1":
             title = input("Nosaukums: ").strip()
             author = input("Autors: ").strip()
-            price = float(input("Cena: ").strip().replace(",", "."))
-            available = int(input("Pieejamais skaits: ").strip())
+            try:
+                price = float(input("Cena: ").strip().replace(",", "."))
+                available = int(input("Pieejamais skaits: ").strip())
+            except ValueError:    
+                print("Cenas un pieejamā skaita vērtībai jābut skaitļiem")
+                continue
+            
             add_book(title, author, price, available, path=DATA_PATH)
 
         elif choice == "2":
@@ -32,12 +37,22 @@ def main():
 
         elif choice == "3":
             title = input("Nosaukums: ").strip()
-            count = int(input("Cik izsniegt?: ").strip())
+            try:
+                count = int(input("Cik izsniegt?: ").strip())
+            except ValueError:
+                print("Grāmatas daudzumam jābut skaitliskam")
+                continue
+
             print(borrow_book(title, count, path=DATA_PATH))
 
         elif choice == "4":
             title = input("Nosaukums: ").strip()
-            count = int(input("Cik atgriezt?: ").strip())
+            try:
+                count = int(input("Cik atgriezt?: ").strip())
+            except ValueError:
+                print("Grāmatas daudzumam jābut skaitliskam")
+                continue
+
             print(return_book(title, count, path=DATA_PATH))
 
         elif choice == "5":

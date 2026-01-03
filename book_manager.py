@@ -8,14 +8,12 @@ def add_book(title, author, price, available, path=DATA_PATH):
         with open(path, 'r', encoding='utf-8') as file:         
          data = json.load(file)  #piekļuve JSON failam un error handling
     except (FileNotFoundError, json.JSONDecodeError):
-        data = {}     
+        data = {}  
 
     if title in data:   # ja gramata jau eksiste, tad atjaunina datus
         data[title]['author'] = author
         data[title]['price'] = price
         data[title]['available'] += available  # palielina pieejamo skaitu
-        with open(path, 'w', encoding='utf-8') as file:
-            json.dump(data, file, indent=4)
          
     else:  # ja gramata neeksiste, tad pievieno jaunu ierakstu JSON faila
         data[title] = {
