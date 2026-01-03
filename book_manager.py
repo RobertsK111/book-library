@@ -1,9 +1,9 @@
 
 import json
 
+DATA_PATH = "data/library_data.json"
 
-
-def add_book(title, author, price, available, path='library_data.json'):
+def add_book(title, author, price, available, path=DATA_PATH):
     try:
         with open(path, 'r', encoding='utf-8') as file:         
          data = json.load(file)  #piekļuve JSON failam un error handling
@@ -30,7 +30,7 @@ def add_book(title, author, price, available, path='library_data.json'):
 
 
 
-def check_book(path='library_data.json'):
+def check_book(path=DATA_PATH):
     try:
         with open(path, "r", encoding="utf-8") as file:
             data = json.load(file)
@@ -51,7 +51,7 @@ def check_book(path='library_data.json'):
 
 
 
-def top_issued(path='library_data.json'): 
+def top_issued(path=DATA_PATH): 
     try:
         with open(path, "r", encoding="utf-8") as file:
             data = json.load(file)
@@ -75,7 +75,7 @@ def top_issued(path='library_data.json'):
 
 
 
-def top_price(path='library_data.json'):
+def top_price(path=DATA_PATH):
     try:
         with open(path, "r", encoding="utf-8") as file:
             data = json.load(file)

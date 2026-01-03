@@ -66,3 +66,28 @@ def return_book(title, count, path = DATA_PATH):
     save_data(data, path)
     return "Grāmata ir atgriezta"
 
+def search_books(query, mode="title", path=DATA_PATH):
+    query = query.strip().lower()
+    data = load_data(path)
+
+    results = []
+
+    if mode == "title":
+        for title in data:
+            if query in title.lower():
+                results.append((title, data[title]))
+
+    elif mode == "author":
+        for title in data:
+            author = data[title]["author"].lower()
+            if query in author:
+                results.append((title, data[title]))
+
+    return results
+
+def top_least_issued(n=5, path = DATA_PATH):
+    data = load_data(path)
+    items = list(data.items())
+
+    items.sort(key = lambda x: x[1]["issued"])
+    return items[:n]
