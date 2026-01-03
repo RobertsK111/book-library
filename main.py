@@ -58,14 +58,20 @@ def main():
         elif choice == "5":
             q = input("Meklēšanas teksts (nosaukums): ").strip()
             results = search_books(q, mode="title", path=DATA_PATH)
-            for title, info in results:
-                print(f"- {title} | {info.get('author', '-')}, pieejams: {info.get('available', 0)}")
+            if not results:
+                print("Nekas nav atrasts pēc nosaukuma.")
+            else:
+                for title, info in results:
+                    print(f"- {title} | {info.get('author', '-')}, pieejams: {info.get('available', 0)}")
 
         elif choice == "6":
             q = input("Meklēšanas teksts (autors): ").strip()
             results = search_books(q, mode="author", path=DATA_PATH)
-            for title, info in results:
-                print(f"- {title} | {info.get('author', '-')}, pieejams: {info.get('available', 0)}")
+            if not results:
+                print("Nekas nav atrasts pēc autora.")
+            else:
+                for title, info in results:
+                    print(f"- {title} | {info.get('author', '-')}, pieejams: {info.get('available', 0)}")
 
         elif choice == "7":
             top_issued(path=DATA_PATH)
